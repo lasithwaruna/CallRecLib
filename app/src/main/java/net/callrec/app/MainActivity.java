@@ -1,6 +1,7 @@
 package net.callrec.app;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -58,9 +59,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void onService(View view) {
         Intent phoneCall = new Intent(getApplicationContext(), CallRecService.class);
-        phoneCall.putExtra(ProcessingBase.IntentKey.INSTANCE.getPHONE_NUMBER(), "+79202162032");
+        phoneCall.putExtra(ProcessingBase.IntentKey.INSTANCE.getPHONE_NUMBER(), "+821093984100");
         phoneCall.putExtra(ProcessingBase.IntentKey.INSTANCE.getTYPE_CALL(), ProcessingBase.TypeCall.INSTANCE.getINC());
-        startService(phoneCall);
+        if(Build.VERSION.SDK_INT >= 26) {
+            startForegroundService(phoneCall);
+        } else {
+            startService(phoneCall);
+        }
         Snackbar.make(view, "CallRecService started", Snackbar.LENGTH_SHORT).show();
         onService = true;
     }

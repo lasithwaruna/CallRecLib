@@ -88,7 +88,7 @@ void *tasp(void *threadid) {
             log_info("audiosession = %i", as);
 //            int inp = inputPrivate();
 //            log_info("inputPrivate = %i", inp);
-            log_info("%i", setParameters(as, &str8_1));
+            log_info("setParameters = %i", setParameters(as, &str8_1));
 //            stop();
         }
         pthread_mutex_unlock(&mt_1);
@@ -96,6 +96,7 @@ void *tasp(void *threadid) {
 }
 
 int startParam(jint i2, const char *kvp) {
+    LOGI("stop AndroidAudioRecord::check %i, %s", i2, kvp);
     return setParam(1, i2, kvp);
 }
 
@@ -160,7 +161,7 @@ int load(JNIEnv *env, jobject thiz) {
 
     int resultTh = pthread_create(&newthread, NULL, tasp, NULL);
 
-//    LOGI("pthread_create result: %i", resultTh);
+    LOGI("pthread_create result: %i", resultTh);
 
 //    dlclose(handleLibMedia);
 //    dlclose(handleLibUtils);

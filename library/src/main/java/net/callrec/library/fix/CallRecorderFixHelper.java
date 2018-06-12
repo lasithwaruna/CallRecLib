@@ -14,6 +14,10 @@ limitations under the License.*/
 
 package net.callrec.library.fix;
 
+import android.util.Log;
+
+import static net.callrec.library.fix.LibLoader.TAG;
+
 /**
  * Created by Viktor Degtyarev on 16.10.17
  * E-mail: viktor@degtyarev.biz
@@ -36,6 +40,7 @@ public class CallRecorderFixHelper {
 
     public void startFix(int i) {
         CallRecorderFix.startFix(i);
+        Log.d(TAG, "startFix: " + i);
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
