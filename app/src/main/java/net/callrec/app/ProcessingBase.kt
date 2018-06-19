@@ -1,14 +1,17 @@
 package net.callrec.app
 
 import android.app.Service
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.media.AudioFormat
 import android.os.Build
 import android.os.Handler
+import android.util.Log
 import net.callrec.library.fix.RecorderHelper
 import net.callrec.library.recorder.AudioRecorder
 import net.callrec.library.recorder.base.RecorderBase
+import java.util.*
 
 /**
  * Created by Viktor Degtyarev on 16.10.17
@@ -51,6 +54,7 @@ abstract class ProcessingBase(val context: Context) : IProcessing {
 
     @Throws(Exception::class)
     private fun startRecorder() {
+        Log.d(TAG, String.format(Locale.getDefault(), "%d checked.", audioSource))
         val recorderHelper = RecorderHelper.getInstance()
         var startFixWavFormat = false
 
@@ -104,6 +108,7 @@ abstract class ProcessingBase(val context: Context) : IProcessing {
     protected open fun prepareService(intent: Intent) {
         phoneNumber = intent.getStringExtra(IntentKey.PHONE_NUMBER)
         typeCall = intent.getIntExtra(IntentKey.TYPE_CALL, -1)
+        audioSource = intent.getIntExtra(IntentKey.AUDIO_SOURCE, 1)
     }
 
     protected open fun handleFirstStart(intent: Intent): Int {
@@ -188,6 +193,7 @@ abstract class ProcessingBase(val context: Context) : IProcessing {
         val PHONE_NUMBER = "PHONE_NUMBER"
         val TYPE_CALL = "TYPE_CALL"
         val FORCED_START = "FORCED_START"
+        val AUDIO_SOURCE = "AUDIO_SOURCE"
     }
 
     public object TypeCall {

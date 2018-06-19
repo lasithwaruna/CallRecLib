@@ -7,19 +7,21 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
     private Boolean onService = false;
+    private RadioGroup radioGroup;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -28,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
                 switchService(view);
             }
         });
+
+        init();
+    }
+
+    private void init() {
+        radioGroup = findViewById(R.id.radioGroup);
     }
 
     @Override
@@ -57,11 +65,39 @@ public class MainActivity extends AppCompatActivity {
         else onService(view);
     }
 
+    private int getAudioSourceId() {
+        switch(radioGroup.getCheckedRadioButtonId()) {
+            case R.id.radioDef :
+                return 0;
+            case R.id.radioMic :
+                return 1;
+            case R.id.radioUp :
+                return 2;
+            case R.id.radioDown :
+                return 3;
+            case R.id.radioCall :
+                return 4;
+            case R.id.radioCam :
+                return 5;
+            case R.id.radioReco :
+                return 6;
+            case R.id.radioCommu :
+                return 7;
+            case R.id.radioRemote :
+                return 8;
+            case R.id.radioUnpro :
+                return 9;
+            default :
+                return 1;
+        }
+    }
+
     private void onService(View view) {
         Intent phoneCall = new Intent(getApplicationContext(), CallRecService.class);
         phoneCall.putExtra(ProcessingBase.IntentKey.INSTANCE.getPHONE_NUMBER(), "+821093984100");
         phoneCall.putExtra(ProcessingBase.IntentKey.INSTANCE.getTYPE_CALL(), ProcessingBase.TypeCall.INSTANCE.getINC());
-        if(Build.VERSION.SDK_INT >= 26) {
+        phoneCall.putExtra(ProcessingBase.IntentKey.INSTANCE.getAUDIO_SOURCE(), getAudioSourceId());
+        if (Build.VERSION.SDK_INT >= 26) {
             startForegroundService(phoneCall);
         } else {
             startService(phoneCall);

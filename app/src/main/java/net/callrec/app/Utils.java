@@ -31,14 +31,9 @@ public class Utils {
         return dir;
     }
 
-    public static String makeFileName() {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("[dd-MM-yyyy]_[HH-mm-ss]");
+    public static String makeFileName(int audioSource) {
 
-        String nameSubscr = "Name subscriber";
-        String phoneSubscr = "Subscriber number";
-        Date date = calendar.getTime();
-
-        return String.format("[%s]_[%s]_%s", nameSubscr, phoneSubscr, df.format(date));
+        String nameSubscr = "CallRec";
+        return String.format("[%s]_%d", nameSubscr, audioSource);
     }
 }

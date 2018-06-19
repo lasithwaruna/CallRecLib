@@ -6,21 +6,74 @@
     android:layout_height="match_parent"
     tools:context="net.callrec.app.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <RadioButton
+            android:id="@+id/radioCam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CAMCORDER" />
 
-    </android.support.design.widget.AppBarLayout>
+        <RadioButton
+            android:id="@+id/radioDef"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DEFAULT" />
 
-    <include layout="@layout/content_main" />
+        <RadioButton
+            android:id="@+id/radioMic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="MIC" />
+
+        <RadioButton
+            android:id="@+id/radioRemote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REMOTE_SUBMIX" />
+
+        <RadioButton
+            android:id="@+id/radioUnpro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UNPROCESSED" />
+
+        <RadioButton
+            android:id="@+id/radioCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VOICE_CALL" />
+
+        <RadioButton
+            android:id="@+id/radioCommu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VOICE_COMMUNICATION" />
+
+        <RadioButton
+            android:id="@+id/radioDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DOWNLINK" />
+
+        <RadioButton
+            android:id="@+id/radioReco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RECOGNITION" />
+
+        <RadioButton
+            android:id="@+id/radioUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UPLINK" />
+
+    </RadioGroup>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

@@ -17,6 +17,7 @@ package net.callrec.library.fix;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
 public class RecorderHelper {
@@ -30,7 +31,7 @@ public class RecorderHelper {
     }
 
     public boolean startFixCallRecorder(Context context, int audioSessionId) {
-        if (isPermissionAudioSettingsModify(context)) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || isPermissionAudioSettingsModify(context)) {
             CallRecorderFixHelper.getInstance().initialize();
 
             CallRecorderFixHelper.getInstance().startFix(audioSessionId);
@@ -46,7 +47,7 @@ public class RecorderHelper {
     }
 
     public boolean startFixCallRecorder7(Context context) {
-        if (isPermissionAudioSettingsModify(context)) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || isPermissionAudioSettingsModify(context)) {
             CallRecorderFixHelper.getInstance().initialize();
 
             CallRecorderFixHelper.getInstance().startFix7();

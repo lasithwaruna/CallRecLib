@@ -1,5 +1,6 @@
 package net.callrec.app
 
+import android.app.Notification
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
@@ -19,6 +20,7 @@ class CallRecService : Service() {
         super.onCreate()
         processing = CallRecProcessingNotification(this)
         processing.onCreate()
+        startForeground(93, Notification())
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -28,6 +30,7 @@ class CallRecService : Service() {
 
     override fun onDestroy() {
         processing.onDestroy()
+        stopForeground(true)
         super.onDestroy()
     }
 }

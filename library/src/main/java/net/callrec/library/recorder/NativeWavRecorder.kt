@@ -8,7 +8,7 @@ import java.io.IOException
 import java.io.RandomAccessFile
 
 class NativeWavRecorder(audioSource: Int, sampleRateInHz: Int, channelConfig: Int, audioEncoding: Int, filePathNoFormat: String) :
-        NativeAudioRecorderBase(audioSource, sampleRateInHz, channelConfig, audioEncoding, filePathNoFormat.plus(".wav")) {
+        NativeAudioRecorderBase(audioSource, sampleRateInHz, channelConfig, audioEncoding, filePathNoFormat.plus(".amr")) {
 
     override fun handleThread() {
         writeAudioDataToFile()

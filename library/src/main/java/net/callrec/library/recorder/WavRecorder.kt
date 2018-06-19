@@ -14,7 +14,7 @@ import java.io.RandomAccessFile
  * E-mail: viktor@degtyarev.biz
  */
 class WavRecorder(audioSource: Int, sampleRateInHz: Int, channelConfig: Int, audioEncoding: Int, filePathNoFormat: String) :
-        AudioRecorderBase(audioSource, sampleRateInHz, channelConfig, audioEncoding, filePathNoFormat.plus(".wav")) {
+        AudioRecorderBase(audioSource, sampleRateInHz, channelConfig, audioEncoding, filePathNoFormat.plus(".amr")) {
 
     override fun handleThread() {
         writeAudioDataToFile()
