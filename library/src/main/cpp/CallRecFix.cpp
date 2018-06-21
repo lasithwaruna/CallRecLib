@@ -43,6 +43,9 @@ Java_net_callrec_library_fix_CallRecorderFix_startFix7(JNIEnv *env, jobject thiz
 JNIEXPORT jint JNICALL
 Java_net_callrec_library_fix_CallRecorderFix_load(JNIEnv *env,
                                                   jobject thiz);
+JNIEXPORT jint JNICALL
+Java_net_callrec_library_fix_CallRecorderFix_load8(JNIEnv *env,
+                                                  jobject thiz);
 }
 
 int setParam(jint i, jint i2, const char *kvp) {

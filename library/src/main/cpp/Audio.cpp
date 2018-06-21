@@ -34,6 +34,8 @@ void AndroidAudioRecord::close() {
             ar_dtor(mAudioRecord);
         free(mAudioRecord);
         mAudioRecord = NULL;
+    } else {
+        LOGI("mAudioRecord is Null");
     }
 }
 
@@ -319,7 +321,7 @@ jboolean Java_net_callrec_library_recorder_AudioRecordNative_nativeInit(JNIEnv *
  * Destroy instance of AndroidAudioRecord class
  */
 jboolean Java_net_callrec_library_recorder_AudioRecordNative_nativeDestroy(JNIEnv *pEnv,
-                                                                             jclass pThis) {
+                                                                           jclass pThis) {
     audiorecord->close();
     audiorecord = NULL;
     return JNI_TRUE;
@@ -337,12 +339,12 @@ jboolean Java_net_callrec_library_recorder_AudioRecordNative_nativeDestroy(JNIEn
  * @return jboolean
  */
 jboolean Java_net_callrec_library_recorder_AudioRecordNative_nativeCreate(JNIEnv *pEnv,
-                                                                            jclass pThis,
-                                                                            jint audiosource,
-                                                                            jint samplerate,
-                                                                            jint audioformat,
-                                                                            jint channels,
-                                                                            jint size) {
+                                                                          jclass pThis,
+                                                                          jint audiosource,
+                                                                          jint samplerate,
+                                                                          jint audioformat,
+                                                                          jint channels,
+                                                                          jint size) {
     audiorecord->set(audiosource, (uint32_t) samplerate, audioformat, (unsigned int) channels,
                      (unsigned int) size);
     //todo very strange bug, if you remove the next line then an error in the function audiorecord->set when called ar_ctor24!!!
@@ -362,7 +364,7 @@ jboolean Java_net_callrec_library_recorder_AudioRecordNative_nativeCreate(JNIEnv
  * @return jint
  */
 jint Java_net_callrec_library_recorder_AudioRecordNative_nativeStart(JNIEnv *pEnv,
-                                                                       jclass pThis) {
+                                                                     jclass pThis) {
     return audiorecord->start();
 }
 
@@ -372,7 +374,7 @@ jint Java_net_callrec_library_recorder_AudioRecordNative_nativeStart(JNIEnv *pEn
  * @return int
  */
 int Java_net_callrec_library_recorder_AudioRecordNative_nativeStop(JNIEnv *pEnv,
-                                                                     jclass pThis) {
+                                                                   jclass pThis) {
     free(audiorecord->lbuffer);
     return audiorecord->stop();
 }
@@ -386,9 +388,9 @@ int Java_net_callrec_library_recorder_AudioRecordNative_nativeStop(JNIEnv *pEnv,
  * @return jbyteArray
  */
 jbyteArray Java_net_callrec_library_recorder_AudioRecordNative_nativeRead(JNIEnv *pEnv,
-                                                                            jclass pThis,
-                                                                            jbyteArray buffer,
-                                                                            jint bufferSize) {
+                                                                          jclass pThis,
+                                                                          jbyteArray buffer,
+                                                                          jint bufferSize) {
     audiorecord->lbuffer = malloc(bufferSize);
     audiorecord->size = bufferSize;
 
@@ -416,10 +418,10 @@ jbyteArray Java_net_callrec_library_recorder_AudioRecordNative_nativeRead(JNIEnv
  * @return 	unsiged int		size
  */
 jint Java_net_callrec_library_recorder_AudioRecordNative_nativeGetBufferSize(JNIEnv *pEnv,
-                                                                               jclass pThis,
-                                                                               jint samplerate,
-                                                                               jint audioformat,
-                                                                               jint channels) {
+                                                                             jclass pThis,
+                                                                             jint samplerate,
+                                                                             jint audioformat,
+                                                                             jint channels) {
     unsigned int size = 0;
     if (as_getInputBufferSize) {
         as_getInputBufferSize(samplerate, audioformat, channels, &size);

@@ -2,7 +2,7 @@ package net.callrec.app
 
 import android.app.Service
 import android.content.Intent
-import android.media.MediaRecorder
+import android.os.Build
 import net.callrec.library.recorder.base.RecorderBase
 import org.jetbrains.anko.toast
 import java.io.File
@@ -71,7 +71,11 @@ class CallRecProcessingNotification(service: Service) : ProcessingBaseNotificati
         stereoChannel = false
         samplingRate = 8000
         audioEncodingBitRate = 0
-        typeRecorder = TypeRecorder.WAV_NATIVE
+        if (Build.VERSION.SDK_INT >= 24) {
+            typeRecorder = TypeRecorder.WAV_NATIVE
+        } else {
+            typeRecorder = TypeRecorder.WAV
+        }
     }
 
     override fun stopThisService() {

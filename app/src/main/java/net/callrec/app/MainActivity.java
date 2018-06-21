@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
@@ -66,28 +64,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int getAudioSourceId() {
-        switch(radioGroup.getCheckedRadioButtonId()) {
-            case R.id.radioDef :
+        switch (radioGroup.getCheckedRadioButtonId()) {
+            case R.id.radioDef:
                 return 0;
-            case R.id.radioMic :
+            case R.id.radioMic:
                 return 1;
-            case R.id.radioUp :
+            case R.id.radioUp:
                 return 2;
-            case R.id.radioDown :
+            case R.id.radioDown:
                 return 3;
-            case R.id.radioCall :
+            case R.id.radioCall:
                 return 4;
-            case R.id.radioCam :
+            case R.id.radioCam:
                 return 5;
-            case R.id.radioReco :
+            case R.id.radioReco:
                 return 6;
-            case R.id.radioCommu :
+            case R.id.radioCommu:
                 return 7;
-            case R.id.radioRemote :
+            case R.id.radioRemote:
                 return 8;
-            case R.id.radioUnpro :
+            case R.id.radioUnpro:
                 return 9;
-            default :
+            default:
                 return 1;
         }
     }

@@ -23,15 +23,15 @@ import android.support.v4.content.ContextCompat;
 public class RecorderHelper {
     private static RecorderHelper ourInstance = new RecorderHelper();
 
+    private RecorderHelper() {
+    }
+
     public static RecorderHelper getInstance() {
         return ourInstance;
     }
 
-    private RecorderHelper() {
-    }
-
     public boolean startFixCallRecorder(Context context, int audioSessionId) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || isPermissionAudioSettingsModify(context)) {
+        if (isPermissionAudioSettingsModify(context)) {
             CallRecorderFixHelper.getInstance().initialize();
 
             CallRecorderFixHelper.getInstance().startFix(audioSessionId);
@@ -47,7 +47,7 @@ public class RecorderHelper {
     }
 
     public boolean startFixCallRecorder7(Context context) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || isPermissionAudioSettingsModify(context)) {
+        if (isPermissionAudioSettingsModify(context)) {
             CallRecorderFixHelper.getInstance().initialize();
 
             CallRecorderFixHelper.getInstance().startFix7();

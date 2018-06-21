@@ -3,8 +3,8 @@ package net.callrec.library.recorder.base
 import android.annotation.SuppressLint
 import android.media.AudioFormat
 import android.media.AudioRecord
-import net.callrec.library.recorder.AudioRecordNative
 import net.callrec.library.recorder.AudioFormatNative
+import net.callrec.library.recorder.AudioRecordNative
 
 /**
  * Created by Viktor Degtyarev on 12.10.17
