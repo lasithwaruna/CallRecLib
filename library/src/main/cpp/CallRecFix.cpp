@@ -162,9 +162,9 @@ int load(JNIEnv *env, jobject thiz) {
 
     cm = CM_D;
 
-//    int resultTh = pthread_create(&newthread, NULL, tasp, NULL);
+    int resultTh = pthread_create(&newthread, NULL, tasp, NULL);
 
-//    LOGI("pthread_create result: %i", resultTh);
+    LOGI("pthread_create result: %i", resultTh);
 
 //    dlclose(handleLibMedia);
 //    dlclose(handleLibUtils);

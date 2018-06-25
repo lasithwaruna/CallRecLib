@@ -296,7 +296,7 @@ extern "C" {
  * Init function. Open system library (libmedia.so) and get some useful function int AudioRecord class.
  */
 jboolean Java_net_callrec_library_recorder_AudioRecordNative_nativeInit(JNIEnv *pEnv,
-                                                                          jclass pThis) {
+                                                                        jclass pThis) {
     void *p_library;
     p_library = dlopen("libmedia.so", RTLD_NOW);
 
