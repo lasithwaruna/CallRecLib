@@ -65,7 +65,7 @@ class CallRecProcessingNotification(service: Service) : ProcessingBaseNotificati
     }
 
     override fun prepareAudioPreferences() {
-        formatFile = "wav"
+        formatFile = "amr"
         outputFormat = 0
         encoder = 0
         stereoChannel = false

@@ -252,6 +252,16 @@ void getFunctionsAudioSystem(void *p_library) {
 void getConstructorsAudioRecord(void *p_library) {/** Audio Record **/
     ar_ctor24 =
             (AudioRecord_ctor24) (dlsym(p_library,
+                                        "_ZN7android11AudioRecordC1E14audio_source_tj14audio_format_tjRKNS_8String16EmPFviPvS6_ES6_j15audio_session_tNS0_13transfer_typeE19audio_input_flags_tjiPK18audio_attributes_t"));
+
+    if (!ar_ctor24)
+        ar_ctor24 =
+                (AudioRecord_ctor24) (dlsym(p_library,
+                                            "_ZN7android11AudioRecordC2E14audio_source_tj14audio_format_tjRKNS_8String16EmPFviPvS6_ES6_j15audio_session_tNS0_13transfer_typeE19audio_input_flags_tjiPK18audio_attributes_t"));
+
+    if (!ar_ctor24)
+        ar_ctor24 =
+            (AudioRecord_ctor24) (dlsym(p_library,
                                         "_ZN7android11AudioRecordC1E14audio_source_tj14audio_format_tjRKNS_8String16EmPFviPvS6_ES6_j15audio_session_tNS0_13transfer_typeE19audio_input_flags_tiiPK18audio_attributes_t"));
 
     if (!ar_ctor24)
