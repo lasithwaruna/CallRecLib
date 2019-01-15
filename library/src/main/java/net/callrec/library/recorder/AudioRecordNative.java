@@ -5,6 +5,7 @@ import net.callrec.library.fix.LibLoader;
 public class AudioRecordNative {
     static {
         LibLoader.loadLib();
+        nativeInit();
     }
 
     public AudioRecordNative(int audiosource, int samplerate, int audioformat,
@@ -12,14 +13,6 @@ public class AudioRecordNative {
         // TODO Auto-generated constructor stub
         //int size = getBufferSize(samplerate, audioformat, channels);
         nativeCreate(audiosource, samplerate, audioformat, channels, size);
-    }
-
-    public static int getFrameCount(int samplerate, int audioformat,
-                                    int channels) {
-        nativeInit();
-        channels = 1;
-        int result = nativeGetMinFrame(samplerate, audioformat, channels);
-        return result;
     }
 
     public int start() {
@@ -44,8 +37,8 @@ public class AudioRecordNative {
 
     public static native int nativeStart();
 
-    public static native int nativeCreate(int audiosource, int samplerate,
-                                          int audioformat, int channels, int size);
+    public static native boolean nativeCreate(int audiosource, int samplerate,
+                                              int audioformat, int channels, int size);
 
     public static native int nativeStop();
 

@@ -13,6 +13,8 @@ import java.util.Date;
  * E-mail: viktor@degtyarev.biz
  */
 public class Utils {
+    private static int counter = 0;
+
     public static String getDefaultPath(Context context) {
         return String.format("%s%s",
                 Utils.normalDir(Environment.getExternalStorageDirectory().getAbsolutePath()),
@@ -32,8 +34,8 @@ public class Utils {
     }
 
     public static String makeFileName(int audioSource) {
-
+        counter += 1;
         String nameSubscr = "CallRec";
-        return String.format("[%s]_%d", nameSubscr, audioSource);
+        return String.format("[%s]_%d_%d", nameSubscr, audioSource, counter);
     }
 }

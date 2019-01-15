@@ -43,7 +43,8 @@ enum sync_event_t {
 
 extern "C" {
 
-#define SIZE_OF_AUDIORECORD 512
+#define SIZE_OF_AUDIORECORD 1024
+#define AUDIO_SESSION_ALLOCATE 0
 
 
 /**

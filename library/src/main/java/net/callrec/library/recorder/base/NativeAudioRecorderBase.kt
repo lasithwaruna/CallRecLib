@@ -30,7 +30,6 @@ abstract class NativeAudioRecorderBase(val audioSource: Int, val sampleRateInHz:
     @Throws(RecorderException::class)
     override fun prepare() {
         bufferSizeInBytes = AudioRecord.getMinBufferSize(sampleRateInHz, channelConfig, audioEncoding)
-//        bufferSizeInBytes = AudioRecordNative.getFrameCount(sampleRateInHz, audioEncoding, channelConfig)
 
         if (bufferSizeInBytes == AudioRecord.ERROR || bufferSizeInBytes == AudioRecord.ERROR_BAD_VALUE) {
             if (this.channelConfig == AudioFormat.CHANNEL_IN_STEREO) {
@@ -43,14 +42,11 @@ abstract class NativeAudioRecorderBase(val audioSource: Int, val sampleRateInHz:
         }
 
         try {
-            AudioRecordNative.nativeInit()
-            try {
-                Thread.sleep(150)
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
-            audioRecord = AudioRecordNative(this.audioSource, this.sampleRateInHz,
-                    AudioFormatNative.AUDIO_FORMAT_PCM_16_BIT, AudioFormatNative.AUDIO_CHANNEL_IN_MONO, bufferSizeInBytes)
+            audioRecord = AudioRecordNative(
+                    this.audioSource, this.sampleRateInHz,
+                    AudioFormatNative.AUDIO_FORMAT_PCM_16_BIT,
+                    AudioFormatNative.AUDIO_CHANNEL_IN_MONO,
+                    bufferSizeInBytes)
         } catch (e: Exception) {
             throw RecorderException(
                     "Failed to initialize an instance of the AudioRecord class.",
