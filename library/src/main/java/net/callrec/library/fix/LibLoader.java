@@ -23,8 +23,8 @@ public class LibLoader {
     public static synchronized void loadLib() {
         synchronized (LibLoader.class) {
             if (!lLib) {
-                System.loadLibrary("callrecfix");
-                Log.d(TAG, "Loaded library callrecfix");
+                System.loadLibrary("CallRecFix");
+                Log.d(TAG, "Loaded library CallRecFix");
                 lLib = true;
             }
         }

@@ -10,8 +10,6 @@ public class AudioRecordNative {
 
     public AudioRecordNative(int audiosource, int samplerate, int audioformat,
                              int channels, int size) {
-        // TODO Auto-generated constructor stub
-        //int size = getBufferSize(samplerate, audioformat, channels);
         nativeCreate(audiosource, samplerate, audioformat, channels, size);
     }
 
@@ -44,9 +42,4 @@ public class AudioRecordNative {
 
     public static native byte[] nativeRead(byte[] buffer, int bufferSize);
 
-    public static native int nativeGetBufferSize(int samplerate,
-                                                 int audioformat, int channels);
-
-    public static native int nativeGetMinFrame(int samplerate,
-                                               int audioformat, int channels);
 }

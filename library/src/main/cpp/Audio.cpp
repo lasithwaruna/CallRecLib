@@ -1,7 +1,7 @@
 #include <string.h>
 #include "audio.h"
 
-bool getFunctionsLibUtils(void *p_library);
+void getFunctionsLibUtils(void *p_library);
 
 void getFunctionsLibMedia(void *p_library);
 
@@ -52,8 +52,11 @@ void dumpLibs() {
   LOGI("AudioRecord_input_private %p", ar_input_private);
   LOGI("AudioRecord_stop %p", ar_stop);
   LOGI("AudioRecord_read %p", ar_read);
-  LOGI("AudioRecord_getMinFrameCount %p", ar_getMinFrameCount);
+  LOGI("string16 %p", string16);
 }
+
+static void *nameAsStr16 = 0;
+static char *appName = "net.callrec.app";
 
 /**
  * Create a AudioRecord instance by it's constructor.
@@ -75,10 +78,10 @@ bool AndroidAudioRecord::set(int audio_source, uint32_t sampleRate, int format,
     mAudioRecord = malloc(SIZE_OF_AUDIORECORD);
     *((uint32_t *) ((uintptr_t) mAudioRecord + SIZE_OF_AUDIORECORD - 4)) = 0xbaadbaad;
     if (ar_ctor24) {
-        ar_ctor24(mAudioRecord, audio_source, sampleRate, format, channels,
-                  &str16, size, NULL, NULL, 0, 0, TRANSFER_DEFAULT, AUDIO_INPUT_FLAG_NONE, NULL,
-                  NULL,
-                  NULL);
+      string16(&nameAsStr16, appName);
+      ar_ctor24(mAudioRecord, audio_source, sampleRate, format, channels,
+                &nameAsStr16, size, NULL, NULL, 0, 0, TRANSFER_DEFAULT, AUDIO_INPUT_FLAG_NONE, NULL,
+                NULL, NULL);
     } else if (ar_ctor19) {
         ar_ctor19(mAudioRecord, audio_source, sampleRate, format, channels,
                   size, NULL, NULL, 0, 0, TRANSFER_DEFAULT,
@@ -103,12 +106,8 @@ bool AndroidAudioRecord::set(int audio_source, uint32_t sampleRate, int format,
 
 int AndroidAudioRecord::inputPrivate() {
     if (mAudioRecord && ar_input_private) {
-        LOGI("start AndroidAudioRecord::inputPrivate");
-//        pthread_mutex_lock(&mt_1);
-        int res = ar_input_private(mAudioRecord);
-//        pthread_mutex_unlock(&mt_1);
-        LOGI("stop AndroidAudioRecord::inputPrivate %i", res);
-        return res;
+      int res = ar_input_private(mAudioRecord);
+      return res;
     }
     return 0;
 }
@@ -157,30 +156,9 @@ int AndroidAudioRecord::read(void *buffer, int size) {
     return 0;
 }
 
-bool getFunctionsLibUtils(void *p_library) {
-    string8 = (CreateString8) dlsym(p_library, "_ZN7android7String8C2EPKc");
+void getFunctionsLibUtils(void *p_library) {
     string16 = (CreateString16) (dlsym(p_library, "_ZN7android8String16C1EPKc"));
-
-    pthread_mutex_lock(&mt_1);
-
-    string8(&str8_1, kvp_as4);
-    if (!str8_1) {
-        LOGI("Failed to create string8");
-    } else {
-        LOGI("Successfully created string8");
-    }
-    //todo set your app name
-    string16(&str16, "net.callrec.app");
-//    string16(&str16, "com.CallRecord");
-    if (!str16) {
-        LOGI("Failed to create string16");
-    } else {
-        LOGI("Successfully created string16");
-    }
-
-    pthread_mutex_unlock(&mt_1);
-
-    return true;
+    //    string16(&nameAsStr16, "net.callrec.app");
 }
 
 void getFunctionsLibMedia(void *p_library) {
@@ -207,10 +185,6 @@ bool getFunctionsAudioRecord(void *p_library) {
     ar_input_private = (AudioRecord_input_private) dlsym(p_library,
                                                          "_ZNK7android11AudioRecord15getInputPrivateEv");
 
-    if (ar_input_private) {
-        LOGI("ar_input_private found!!!");
-    }
-
     ar_stop = (AudioRecord_stop) (dlsym(p_library,
                                         "_ZN7android11AudioRecord4stopEv"));
 
@@ -225,25 +199,8 @@ bool getFunctionsAudioRecord(void *p_library) {
         ar_read = (AudioRecord_read) (dlsym(p_library,
                                             "_ZN7android11AudioRecord4readEPvjb"));
 
-    ar_getMinFrameCount = (AudioRecord_getMinFrameCount) (dlsym(p_library,
-                                                                "_ZN7android11AudioRecord16getMinFrameCountEPmj14audio_format_tj"));
-    if (!ar_getMinFrameCount)
-        ar_getMinFrameCount = (AudioRecord_getMinFrameCount) (dlsym(p_library,
-                                                                    "_ZN7android11AudioRecord16getMinFrameCountEPij14audio_format_ti"));
-    if (!ar_getMinFrameCount)
-        ar_getMinFrameCount = (AudioRecord_getMinFrameCount) (dlsym(p_library,
-                                                                    "_ZN7android11AudioRecord16getMinFrameCountEPij14audio_format_tj"));
-    // check function.
-    LOGI("getInputBufferSize %p", ar_getMinFrameCount);
-
-    if (!(as_getInputBufferSize)) {
-        dlclose(p_library);
-        return false;
-    }
-
     if (!((ar_ctor24 || ar_ctor19 || ar_ctor16 || ar_ctor17 || ar_ctor8 || ar_ctor9)
-          && ar_dtor && (ar_start || ar_start_below9) && ar_stop && ar_read &&
-          ar_getMinFrameCount)) {
+          && ar_dtor && (ar_start || ar_start_below9) && ar_stop && ar_read)) {
         dlclose(p_library);
         return false;
     }
@@ -255,20 +212,8 @@ void getFunctionsAudioSystem(void *p_library) {
     setParameters = (int (*)(int, void *)) dlsym(p_library,
                                                  "_ZN7android11AudioSystem13setParametersEiRKNS_7String8E");
 
-    as_getInputBufferSize =
-            (AudioSystem_getInputBufferSize) (dlsym(p_library,
-                                                    "_ZN7android11AudioSystem18getInputBufferSizeEj14audio_format_tjPm"));
-
-    if (!as_getInputBufferSize)
-        as_getInputBufferSize =
-                (AudioSystem_getInputBufferSize) (dlsym(p_library,
-                                                        "_ZN7android11AudioSystem18getInputBufferSizeEjiiPj"));
-
-    if (!as_getInputBufferSize)
-        as_getInputBufferSize =
-                (AudioSystem_getInputBufferSize) (dlsym(p_library,
-                                                        "_ZN7android11AudioSystem18getInputBufferSizeEj14audio_format_tiPj"));
 }
+
 
 void getConstructorsAudioRecord(void *p_library) {/** Audio Record **/
     ar_ctor24 =
@@ -367,24 +312,17 @@ jboolean Java_net_callrec_library_recorder_AudioRecordNative_nativeDestroy(JNIEn
  *
  * @return jboolean
  */
-jboolean Java_net_callrec_library_recorder_AudioRecordNative_nativeCreate(JNIEnv *pEnv,
+jboolean Java_net_callrec_library_recorder_AudioRecordNative_nativeCreate(JNIEnv *env,
                                                                           jclass pThis,
                                                                           jint audiosource,
                                                                           jint samplerate,
                                                                           jint audioformat,
                                                                           jint channels,
                                                                           jint size) {
+    LOGI("nativeCreate");
     audiorecord = new AndroidAudioRecord();
     audiorecord->set(audiosource, (uint32_t) samplerate, audioformat, (unsigned int) channels,
                      (unsigned int) size);
-    //todo very strange bug, if you remove the next line then an error in the function audiorecord->set when called ar_ctor24!!!
-    //    audiorecord->inputPrivate();
-//
-//    LOGI("inputPrivate %i", inpPriv);
-//
-//    LOGI("set_parameters %i", setParameters(inpPriv, &str8_1));
-
-    LOGI("nativeCreate");
     return true;
 }
 
@@ -437,25 +375,4 @@ jbyteArray Java_net_callrec_library_recorder_AudioRecordNative_nativeRead(JNIEnv
     return lbuffer;
 }
 
-/**
- * Helper method to get an input size of buffer for one second record, it's use the method of AudioSystem class.
- * @param 	jint			samplerate
- *
- * @param 	jint 			audioformat
- * @param 	jint  			channels
- *
- * @return 	unsiged int		size
- */
-jint Java_net_callrec_library_recorder_AudioRecordNative_nativeGetBufferSize(JNIEnv *pEnv,
-                                                                             jclass pThis,
-                                                                             jint samplerate,
-                                                                             jint audioformat,
-                                                                             jint channels) {
-    unsigned int size = 0;
-    if (as_getInputBufferSize) {
-        as_getInputBufferSize(samplerate, audioformat, channels, &size);
-    }
-    LOGI("buffer size %d", size);
-    return size;
-}
 }

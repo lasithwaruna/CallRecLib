@@ -47,22 +47,6 @@ extern "C" {
 #define AUDIO_SESSION_ALLOCATE 0
 
 
-/**
- * Helper method to get an input size of buffer for one second record, it's depend on sample rate, audio format, channels mask.
- *
- *  name mangling for all android's version:
- * 		_ZN7android11AudioSystem18getInputBufferSizeEj14audio_format_tjPj
- * 		_ZN7android11AudioSystem18getInputBufferSizeEjiiPj
- * 		_ZN7android11AudioSystem18getInputBufferSizeEj14audio_format_tiPj
- *
- * @param 	unsigned int  		sample_rate
- * @param 	int 				audio_format
- * @param 	unsigned int  		channels mask
- * @param 	int*				size
- * @return 	int 				size of buffer
- */
-typedef int (*AudioSystem_getInputBufferSize)(unsigned int, int, unsigned int,
-                                              unsigned int *);
 typedef void (*CreateString16)(void *, const char *);
 typedef void (*CreateString8)(void *, const char *);
 typedef int (*SetParameters)(int, void *);
@@ -141,7 +125,7 @@ typedef void (*AudioRecord_ctor17)(void *, int, unsigned int, int, unsigned int,
  * 		_ZN7android11AudioRecordC1E14audio_source_tj14audio_format_tjiNS0_12record_flagsEPFviPvS4_ES4_ii
  *
  * @param 	audio_sourc_t  		audio_source
- * @param 	unsigned int 		sample_rate
+o * @param 	unsigned int 		sample_rate
  * @param 	audio_format_t  	format
  * @param 	unsigned int  		channels
  * @param	int					size
@@ -205,10 +189,8 @@ typedef int (*AudioRecord_start_below9)();
 typedef void (*AudioRecord_stop)(void *);
 
 typedef int (*AudioRecord_read)(void *, void *, unsigned int, bool);
-typedef int (*AudioRecord_getMinFrameCount)(int *, unsigned int, int, int);
 typedef int (*AudioRecord_input_private)(void *);
 
-static AudioSystem_getInputBufferSize as_getInputBufferSize;
 static CreateString16 string16;
 static CreateString16 string8;
 static SetParameters setParameters;
@@ -225,16 +207,15 @@ static AudioRecord_start_below9 ar_start_below9;
 static AudioRecord_input_private ar_input_private;
 static AudioRecord_stop ar_stop;
 static AudioRecord_read ar_read;
-static AudioRecord_getMinFrameCount ar_getMinFrameCount;
 
-static void *str16 = 0;
-static void *str8_1 = 0;
+static void *paramAsString8 = 0;
 static const char *kvp_def = "input_source=4";
 static const char *kvp_as4 = "input_source=4;routing=-2147483584";
 static const char *kvp_as7 = "input_source=4;routing=-2147483647";
 
 static int cm;
-static const int CM_D = 0;
+static const int CMD_WAIT = 0;
+static const int CMD_GO = 1;
 static int as;
 
 static pthread_mutex_t mt_1 = PTHREAD_MUTEX_INITIALIZER;
