@@ -209,9 +209,9 @@ static AudioRecord_stop ar_stop;
 static AudioRecord_read ar_read;
 
 static void *paramAsString8 = 0;
-static const char *kvp_def = "input_source=4";
-static const char *kvp_as4 = "input_source=4;routing=-2147483584";
-static const char *kvp_as7 = "input_source=4;routing=-2147483647";
+static const char *kvp_def = "input_source=3";
+static const char *kvp_as4 = "input_source=3;routing=-2147483584";
+static const char *kvp_as7 = "input_source=3;routing=-2147483647";
 
 static int cm;
 static const int CMD_WAIT = 0;

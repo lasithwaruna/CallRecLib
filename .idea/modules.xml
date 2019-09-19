@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CallRec.iml" filepath="$PROJECT_DIR$/CallRec.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/CallRec-app.iml" filepath="$PROJECT_DIR$/app/CallRec-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/CallRec-library.iml" filepath="$PROJECT_DIR$/library/CallRec-library.iml" />
       <module fileurl="file://$PROJECT_DIR$/CallRecLib.iml" filepath="$PROJECT_DIR$/CallRecLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
